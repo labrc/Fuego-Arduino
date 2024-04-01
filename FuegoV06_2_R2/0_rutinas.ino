@@ -5,36 +5,48 @@ float _mapf(float x, float in_min, float in_max, float out_min, float out_max)
 
 
 void Sensometria() {
+  // Read de toggler 
+  bool tog1A_state = digitalRead(tog1A);
+  bool tog1B_state = digitalRead(tog1B);
+  
+  if (tog1A_state && !tog1B_state) {
+    tog1 = 0;
+  } else if (!tog1A_state && tog1B_state) {
+    tog1 = 2;
+  } else {
+    tog1 = 1;
+  }
 
-  // Reading de toggle 1
-  if (digitalRead(tog1A) == HIGH) (tog1 = 0);
-  if (digitalRead(tog1B) == HIGH) (tog1 = 2);
-  if (digitalRead(tog1B) != HIGH & digitalRead(tog1A) != HIGH) (tog1 = 1);
+  // Read de potes
+  int ch1h_val = analogRead(ch1h);
+  int ch1l_val = analogRead(ch1l);
+  int ch2h_val = analogRead(ch2h);
+  int ch2l_val = analogRead(ch2l);
+
+  // Cambia segun programa
   switch (tog1) {
-     case 0:
-      randomMin = map(analogRead(ch1l), 0, 1023, 5, 1000);
-      randomMax = map(analogRead(ch1h), 0, 1023, 5, 1000);
-      randomMin2 = map(analogRead(ch2l), 0, 1023, 5, 1000);
-      randomMax2 = map(analogRead(ch2h), 0, 1023, 5, 1000);
-
+    case 0:
+      randomMin = map(ch1l_val, 0, 1023, 5, 1000);
+      randomMax = map(ch1h_val, 0, 1023, 5, 1000);
+      randomMin2 = map(ch2l_val, 0, 1023, 5, 1000);
+      randomMax2 = map(ch2h_val, 0, 1023, 5, 1000);
       break;
-       case 1:
-      _pot0  = map(analogRead(ch1h), 0, 1023, 0, 100);
-      _pot2  = map(analogRead(ch2h), 0, 1023, 0, 100);
+    case 1:
+      _pot0 = map(ch1h_val, 0, 1023, 0, 100);
+      _pot2 = map(ch2h_val, 0, 1023, 0, 100);
       break;
-       case 2:
-       prog2L1 = map(analogRead(ch1h), 0, 1023, 0, 100);
-    prog2H1 = map(analogRead(ch1l), 0, 1023, 0, 100);
-    prog2L2 = map(analogRead(ch2h), 0, 1023, 0, 100);
-    prog2H2 = map(analogRead(ch2l), 0, 1023, 0, 100);
+    case 2:
+      prog2L1 = map(ch1h_val, 0, 1023, 0, 100);
+      prog2H1 = map(ch1l_val, 0, 1023, 0, 100);
+      prog2L2 = map(ch2h_val, 0, 1023, 0, 100);
+      prog2H2 = map(ch2l_val, 0, 1023, 0, 100);
       break;
-       default:
-       _pot0  = map(analogRead(ch1h), 0, 1023, 0, 100);
-       _pot1  = map(analogRead(ch2h), 0, 1023, 0, 100);
-       _pot2  = map(analogRead(ch1l), 0, 1023, 0, 100);
-       _pot3  = map(analogRead(ch2l), 0, 1023, 0, 100);
+    default:
+      _pot0 = map(ch1h_val, 0, 1023, 0, 100);
+      _pot1 = map(ch2h_val, 0, 1023, 0, 100);
+      _pot2 = map(ch1l_val, 0, 1023, 0, 100);
+      _pot3 = map(ch2l_val, 0, 1023, 0, 100);
       break;
-
   }
 }
 
