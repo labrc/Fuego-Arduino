@@ -30,16 +30,16 @@ char ver[] = "Verion 8";
 #include "Dimmer.h"
 
 
-//ver8 SPI
-#include <SPI.h>
+//// ver8 SPI
+//#include <SPI.h>
 
-#define SS_PIN 10 // Slave Select (SS)
-#define MOSI_PIN 11 // Master Out Slave In (MOSI)
-#define MISO_PIN 12 // Master In Slave Out (MISO)
-#define SCK_PIN 13 // Serial Clock (SCK)
+//#define SS_PIN 10 // Slave Select (SS)
+//#define MOSI_PIN 11 // Master Out Slave In (MOSI)
+//#define MISO_PIN 12 // Master In Slave Out (MISO)
+//#define SCK_PIN 13 // Serial Clock (SCK)
 
-#define DATA_SIZE 6 // Tamaño de datos a recibir
-#define RESPONSE_SIZE 2 // Tamaño de la respuesta a enviar
+//#define DATA_SIZE 6 // Tamaño de datos a recibir
+//#define RESPONSE_SIZE 2 // Tamaño de la respuesta a enviar
 
 
 int totalcanales = 2;
