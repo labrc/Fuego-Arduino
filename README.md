@@ -5,3 +5,6 @@ Controlador Dimmer para luces de tungsteno (Leading edge) basado en Arduino nano
 <br>&nbsp;&nbsp;&nbsp;-Optos PC817 o similares y puente de diodos (para deteccion de paso por 0)
 <br>&nbsp;&nbsp;&nbsp;-Moc3020 o similares (Optotriac)
 <br>&nbsp;&nbsp;&nbsp;-Arduino NANO
+
+Libreria requerida:<br>&nbsp;&nbsp;&nbsp;
+Dimmer master https://github.com/circuitar/Dimmer
