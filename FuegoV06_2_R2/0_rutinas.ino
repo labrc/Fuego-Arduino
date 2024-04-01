@@ -122,7 +122,6 @@ int Randomset(int _ch) {
 }
 
 
-
 void programa1() {
   if (ch1d < 1) {
     ch1new = true;
@@ -155,7 +154,7 @@ void programa1() {
   }
 }
 
-
+/// Nombre legacy del programa extra, no es efecto vela en este caso,sinó ON OFF
 void vela() {
 
   unsigned long currentTime = millis();
@@ -196,11 +195,6 @@ void vela() {
   }
 }
 
- 
-
-
-
-
 
 void VelaOc()
 {
@@ -211,8 +205,4 @@ void VelaOc()
     lastRefreshTime += velamilistimer;
     vela();
   }
-}
-void Luzseran() {
-
-  
 }
