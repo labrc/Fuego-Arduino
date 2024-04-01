@@ -53,48 +53,32 @@ void Sensometria() {
 
 
 int pasosset(int _ch) {
-  if ((_ch != 1) && (_ch != 2)) {
+  if (_ch != 1 && _ch != 2) {
     Serial.println("ERROR! RANDOMSET MAL LLAMADO");
     return 1;
   }
 
-  int _max = _pot0;
-  int _min = _pot1;
   int _tim, _act;
   float _resultado;
 
+  // Determine which channel to operate on
   if (_ch == 1) {
     Timing1 = Timingber;
     _tim = Timing1;
     _act = ch1;
-
-    if (tick1) {
-      _resultado = _max;
-    } else {
-      _resultado = _min;
-    }
-
+    _resultado = tick1 ? _pot0 : _pot1;
     tick1 = !tick1;
-  }
-
-  if (_ch == 2) {
+  } else if (_ch == 2) {
     Timing2 = Timingber;
     _tim = Timing2;
     _act = ch2;
-
-    if (tick2) {
-      _resultado = _max;
-      rnd2 = _max;
-      Serial.print("maxim");
-    } else {
-      _resultado = _min;
-      rnd2 = _min;
-      Serial.print("minim");
-    }
-
+    _resultado = tick2 ? _pot0 : _pot1;
     tick2 = !tick2;
+    rnd2 = _resultado; // Store value for rnd2
+    Serial.println(tick2 ? "maxim" : "minim"); // Print status
   }
 
+  // Ensure _resultado is at least 1
   if (_resultado < 1) {
     _resultado = 1;
   }
@@ -103,42 +87,40 @@ int pasosset(int _ch) {
 }
 
 
-
 int Randomset(int _ch) {
-  unsigned long _RNDA, _RNDB;
-  int _tim, _rnd, _act;
+  if (_ch != 1 && _ch != 2) {
+    Serial.println("ERROR! RANDOMSET MAL LLAMADO");
+    return 1;
+  }
+
+  unsigned long _tim;
+  int _RNDA, _RNDB, _rnd, _act;
   float _resultado;
 
+  // Determinar qué canal estamos usando
   if (_ch == 1) {
     Timing1 = Timing + random(-Randtiming / 2, Randtiming / 2);
     _RNDA = _pot0;
     _RNDB = _pot1;
     _tim = Timing1;
     _act = ch1;
+    rnd1 = random(min(_RNDA, _RNDB), max(_RNDA, _RNDB)); // Generar número aleatorio
   } else if (_ch == 2) {
     Timing2 = Timing + random(-Randtiming / 2, Randtiming / 2);
     _RNDA = _pot2;
     _RNDB = _pot3;
     _tim = Timing2;
     _act = ch2;
-  } else {
-    Serial.println("ERROR! RANDOMSET MAL LLAMADO");
-    return 1;
+    rnd2 = random(min(_RNDA, _RNDB), max(_RNDA, _RNDB)); // Generar número aleatorio
   }
 
-  _rnd = _RNDA <= _RNDB ? random(_RNDA, _RNDB) : random(_RNDB, _RNDA);
-
-  if (_ch == 1) {
-    rnd1 = _rnd;
-  } else if (_ch == 2) {
-    rnd2 = _rnd;
-  }
-
-  _resultado = (_act <= _rnd) ? ((_rnd - _act) / _tim) : ((_act - _rnd) / _tim);
-  _resultado = (_resultado < 1) ? 1 : _resultado;
+  // Calcular resultado
+  _resultado = abs(_act - rnd1) / _tim; // Utilizar rnd1 si es ch1, rnd2 si es ch2
+  _resultado = max(1, _resultado); // Asegurarse de que el resultado sea al menos 1
 
   return _resultado;
 }
+
 
 
 void programa1() {
